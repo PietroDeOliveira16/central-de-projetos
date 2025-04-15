@@ -1,6 +1,7 @@
 import { Component, Signal, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CriarProjetoService } from '../service/criar-projeto.service';
+import { CriarProjetoService } from '../service/criar-projeto-service/criar-projeto.service';
+import * as Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-criar-projeto',
@@ -17,11 +18,20 @@ export class CriarProjetoComponent {
 
   criarProjeto(){
     this.criarProjetoService.postCriarProjeto(this.nome, this.descricao, this.codigo).subscribe((response: String) => {
-      console.log(response);
+      Swal.default.fire({title:response});
     });
   }
 
   checkLenght(){
-    // esse código vai checar e garantir que a descrição tenha até no máximo 2000 caracteres
+    console.log('checando input');
+  }
+
+  onFocusOut(event: FocusEvent){
+    const elemento = event.target as HTMLInputElement | HTMLTextAreaElement;
+    if (elemento.value === ''){
+      elemento.classList.add('is-invalid');
+    } else {
+      elemento.classList.remove('is-invalid');
+    }
   }
 }

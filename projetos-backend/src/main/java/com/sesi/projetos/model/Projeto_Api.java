@@ -4,16 +4,14 @@ public class Projeto_Api {
     private String nomeProjeto;
     private String descricaoProjeto;
     private String codigoProjeto;
-    private String dataCriacao;
 
     public Projeto_Api() {
     }
 
-    public Projeto_Api(String nomeProjeto, String descricaoProjeto, String codigoProjeto, String dataCriacao) {
+    public Projeto_Api(String nomeProjeto, String descricaoProjeto, String codigoProjeto) {
         this.nomeProjeto = nomeProjeto;
         this.descricaoProjeto = descricaoProjeto;
         this.codigoProjeto = codigoProjeto;
-        this.dataCriacao = dataCriacao;
     }
 
     public String getNomeProjeto() {
@@ -38,13 +36,5 @@ public class Projeto_Api {
 
     public void setCodigoProjeto(String codigoProjeto) {
         this.codigoProjeto = codigoProjeto;
-    }
-
-    public String getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(String dataCriacao) {
-        this.dataCriacao = dataCriacao;
     }
 }

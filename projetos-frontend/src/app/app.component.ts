@@ -5,7 +5,7 @@ import { CriarProjetoComponent } from "./criar-projeto/criar-projeto.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, CriarProjetoComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

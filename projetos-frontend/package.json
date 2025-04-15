@@ -21,9 +21,9 @@
     "bootstrap": "^5.3.5",
     "glob": "^11.0.1",
     "lru-cache": "^11.1.0",
-    "popper.js": "^1.16.1",
     "rimraf": "^6.0.1",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.18.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

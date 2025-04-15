@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Projeto } from '../model/projeto.type';
+import { Projeto } from '../../model/projeto.type';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

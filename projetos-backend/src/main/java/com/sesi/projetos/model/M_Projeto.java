@@ -13,7 +13,6 @@ public class M_Projeto {
     @Column(name = "cod_projeto", length = 8, nullable = false, unique = true)
     private String codProjeto;
     private String nome;
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String descricao;
     private LocalDate dataCriacao = LocalDate.now();

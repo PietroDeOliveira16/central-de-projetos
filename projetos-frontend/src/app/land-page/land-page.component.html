@@ -1,0 +1,18 @@
+<div class="container">
+    <div *ngIf="projetoVazio == false; then projetosTemplate else semProjetos">
+    </div>
+</div>
+
+<ng-template #projetosTemplate>
+    <div *ngFor="let projeto of projetos" class="projeto mt-2">
+        <h3>{{projeto.nomeProjeto}}</h3>
+        <h5>{{projeto.codigoProjeto}}</h5>
+        <p>{{projeto.descricaoProjeto}}</p>
+        <button (click)="saibaMais($event)" class="btn btn-success">Saiba mais >></button>
+        <hr>
+    </div>
+</ng-template>
+
+<ng-template #semProjetos>
+    <h1>Nenhum projeto disponível no momento :(</h1>
+</ng-template>

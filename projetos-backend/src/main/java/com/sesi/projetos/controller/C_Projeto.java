@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class C_Projeto {
@@ -18,12 +20,12 @@ public class C_Projeto {
 
     @PostMapping("/criarProjeto")
     public ResponseEntity<String> postCriar(@RequestBody Projeto_Api projetoApi) {
-        M_Projeto response = s_projeto.criarProjeto(projetoApi.getNomeProjeto(),
+        return s_projeto.criarProjeto(projetoApi.getNomeProjeto(),
                 projetoApi.getDescricaoProjeto(), projetoApi.getCodigoProjeto());
-        if (response != null){
-            return ResponseEntity.ok(response.getNome());
-        } else {
-            return ResponseEntity.ok("erro ao salvar projeto");
-        }
+    }
+
+    @GetMapping("/getProjetos")
+    public List<Projeto_Api> postGetProjetos(){
+        return s_projeto.getProjetosApi();
     }
 }
