@@ -26,12 +26,11 @@ export class LandPageComponent implements OnInit{
     },
     (erro) => {
       console.error('Erro ao obter os projetos da api: ', erro);
+      this.projetoVazio = true;
     });
   }
 
-  saibaMais(event: Event){
-    this.service.getSession().subscribe((response) => {
-      console.log(response);
-    });
+  saibaMais(event: MouseEvent){
+    console.log(event.target);
   }
 }

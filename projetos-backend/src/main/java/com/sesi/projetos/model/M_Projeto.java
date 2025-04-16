@@ -3,6 +3,7 @@ package com.sesi.projetos.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "projeto")
@@ -15,8 +16,8 @@ public class M_Projeto {
     private String nome;
     @Column(columnDefinition = "TEXT")
     private String descricao;
-    private LocalDate dataCriacao = LocalDate.now();
-    private LocalDate dataTermino = null;
+    private LocalDateTime dataCriacao = LocalDateTime.now();
+    private LocalDateTime dataTermino = null;
 
     public Long getId() {
         return id;
@@ -50,19 +51,19 @@ public class M_Projeto {
         this.descricao = descricao;
     }
 
-    public LocalDate getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDate getDataTermino() {
+    public LocalDateTime getDataTermino() {
         return dataTermino;
     }
 
-    public void setDataTermino(LocalDate dataTermino) {
+    public void setDataTermino(LocalDateTime dataTermino) {
         this.dataTermino = dataTermino;
     }
 }
