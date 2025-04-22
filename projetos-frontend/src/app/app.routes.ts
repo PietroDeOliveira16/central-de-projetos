@@ -3,6 +3,7 @@ import { LandPageComponent } from './land-page/land-page.component';
 import { CriarProjetoComponent } from './criar-projeto/criar-projeto.component';
 import { LoginComponent } from './login/login.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
+import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
     {
@@ -16,7 +17,8 @@ export const routes: Routes = [
     },
     {
         path:'login',
-        component:LoginComponent
+        component:LoginComponent,
+        canActivate: [authGuard]
     },
     {
         path:'cadastro',
@@ -24,6 +26,7 @@ export const routes: Routes = [
     },
     {
         path:'criar-projeto',
-        component:CriarProjetoComponent
+        component:CriarProjetoComponent,
+        canActivate: [authGuard]
     }
 ];

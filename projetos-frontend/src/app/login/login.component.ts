@@ -16,7 +16,7 @@ export class LoginComponent {
 
   logar(){
     this.service.postLogar(this.username, this.password).subscribe((response) => {
-      console.log(response);
+      console.log(response.accessToken);
     });
   }
 }

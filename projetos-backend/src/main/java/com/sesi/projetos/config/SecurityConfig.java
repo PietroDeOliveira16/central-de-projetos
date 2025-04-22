@@ -33,6 +33,7 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_ROUTES = {
             "/auth/authenticate",
+            "/auth/refresh",
             "/login",
             "/cadastro",
             "/getProjetos"
