@@ -11,14 +11,17 @@
       <div class="input-group">
         <input [(ngModel)]="codigo" (focusout)="onFocusOut($event)" type="text" class="form-control" id="descricao" aria-describedby="basic-addon3 basic-addon4">
       </div>
-      <div class="form-text" id="basic-addon4">É recomendado que o código contenha no mínimo 3 letras maíusculas que lembrem o nome do projeto</div>
+      <div class="form-text" id="basic-addon4">É recomendado que o código contenha no mínimo 3 e no máximo 5 caracteres que lembrem o nome do projeto</div>
       <div class="form-text obrigatorio">*Campo obrigatório</div>
     </div>
     <div class="mt-3">
       <label for="basic-url" class="form-label">Descrição do projeto</label>
       <div class="form-floating">
-        <textarea [(ngModel)]="descricao" (input)="checkLenght()" (focusout)="onFocusOut($event)" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-        <label for="floatingTextarea2">Descrição</label>
+      <textarea [(ngModel)]="descricao" (input)="checkLenght($event)" (focusout)="onFocusOut($event)" 
+        class="form-control" 
+        placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+      <label [ngClass]="{'quase-max-desc' : isQuaseMaxDesc, 'atingiu-max-desc' : isMaxDesc}" 
+        for="floatingTextarea2" class="fw-bold">{{ textoLimiteDescricao }}</label>
       </div>
       <div class="form-text obrigatorio">*Campo obrigatório</div>
     </div>

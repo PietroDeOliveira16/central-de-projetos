@@ -1,0 +1,11 @@
+.obrigatorio{
+    color: rgba(200, 0, 0, 0.6) !important;
+}
+
+.quase-max-desc{
+    color: rgba(255, 175, 71, 0.614) !important;
+}
+
+.atingiu-max-desc{
+    color: rgba(255, 0, 0, 0.6) !important;
+}

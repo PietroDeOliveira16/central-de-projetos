@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { LandPageService } from '../service/land-page-service/land-page.service';
-import { Projeto } from '../model/projeto.type';
+import { LandPageService } from '../../service/land-page-service/land-page.service';
+import { Projeto } from '../../model/projeto.type';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -29,9 +29,7 @@ export class LandPageComponent implements OnInit{
     });
   }
 
-  saibaMais(event: Event){
-    this.service.getSession().subscribe((response) => {
-      console.log(response);
-    });
+  saibaMais(id: String){
+    console.log("id do projeto: ", id);
   }
 }
