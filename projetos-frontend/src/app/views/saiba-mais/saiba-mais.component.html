@@ -1,1 +1,5 @@
-<p>saiba-mais works!</p>
+<div class="container mt-3" *ngIf="projetoSelecionado">
+    <h1>{{ projetoSelecionado.nomeProjeto }}</h1>
+    <h6>{{ projetoSelecionado.codigoProjeto }}</h6>
+    <p>{{ projetoSelecionado.descricaoProjeto }}</p>
+</div>
