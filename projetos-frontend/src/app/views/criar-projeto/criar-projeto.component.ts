@@ -2,11 +2,12 @@ import { Component, Signal, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CriarProjetoService } from '../../service/criar-projeto-service/criar-projeto.service';
 import { NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import * as Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-criar-projeto',
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, CommonModule],
   templateUrl: './criar-projeto.component.html',
   styleUrl: './criar-projeto.component.css'
 })
@@ -14,6 +15,40 @@ export class CriarProjetoComponent {
   nome = "";
   descricao = "";
   codigo = "";
+  dias: any = {
+    dias:[
+      {
+        dia:"Segunda-feira",
+        isChecked:false
+      }, 
+      {
+        dia:"Terça-feira",
+        isChecked:false
+      }, 
+      {
+        dia:"Quarta-feira",
+        isChecked:false
+      },
+      {
+        dia:"Quinta-feira",
+        isChecked:false
+      },
+      {
+        dia:"Sexta-feira",
+        isChecked:false
+      },
+      {
+        dia:"Sábado",
+        isChecked:false
+      },
+      {
+        dia:"Domingo",
+        isChecked:false
+      },
+    ], 
+    horarioInicio:"14:00",
+    horarioFim:"16:00"
+  };
   readonly maxDescricao: number = 2000;
   textoLimiteDescricao = "0/" + String(this.maxDescricao);
 
@@ -23,8 +58,21 @@ export class CriarProjetoComponent {
   criarProjetoService = inject(CriarProjetoService);
 
   criarProjeto(){
+    var diasFormatados: any[] = [];
+    this.dias.dias.forEach((diaSelecionado:any) => {
+      if(diaSelecionado.isChecked == true){
+        diasFormatados.push(diaSelecionado.dia);
+      }
+    });
+    diasFormatados.push(this.dias.horarioInicio);
+    diasFormatados.push(this.dias.horarioFim);
+    diasFormatados.push(this.codigo);
+    console.log("Dias formatados: ", diasFormatados);
     this.criarProjetoService.postCriarProjeto(this.nome, this.descricao, this.codigo).subscribe((response: String) => {
       Swal.default.fire({title:response});
+      this.criarProjetoService.postCriarDiasProjeto(diasFormatados).subscribe((response:String) => {
+        Swal.default.fire({title:response});
+      })
     });
   }
 

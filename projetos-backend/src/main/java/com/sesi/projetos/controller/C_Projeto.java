@@ -1,5 +1,6 @@
 package com.sesi.projetos.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sesi.projetos.model.M_Projeto;
 import com.sesi.projetos.model.Projeto_Api;
 import com.sesi.projetos.service.S_Projeto;
@@ -22,6 +23,11 @@ public class C_Projeto {
     public ResponseEntity<String> postCriar(@RequestBody Projeto_Api projetoApi) {
         return s_projeto.criarProjeto(projetoApi.getNomeProjeto(),
                 projetoApi.getDescricaoProjeto(), projetoApi.getCodigoProjeto());
+    }
+
+    @PostMapping("/criarProjeto/dias")
+    public ResponseEntity<String> postCriarDias(@RequestBody String dados){
+        return s_projeto.criarProjetoDias(dados);
     }
 
     @GetMapping("/getProjetos")
