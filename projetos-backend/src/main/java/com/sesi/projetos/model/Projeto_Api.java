@@ -1,6 +1,7 @@
 package com.sesi.projetos.model;
 
 public class Projeto_Api {
+    private String id;
     private String nomeProjeto;
     private String descricaoProjeto;
     private String codigoProjeto;
@@ -8,10 +9,19 @@ public class Projeto_Api {
     public Projeto_Api() {
     }
 
-    public Projeto_Api(String nomeProjeto, String descricaoProjeto, String codigoProjeto) {
+    public Projeto_Api(String id, String nomeProjeto, String descricaoProjeto, String codigoProjeto) {
+        this.id = id;
         this.nomeProjeto = nomeProjeto;
         this.descricaoProjeto = descricaoProjeto;
         this.codigoProjeto = codigoProjeto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNomeProjeto() {

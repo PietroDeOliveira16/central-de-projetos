@@ -18,10 +18,20 @@ import java.util.List;
 public class S_Projeto {
     @Autowired
     private R_Projeto r_projeto;
+
     public ResponseEntity<String> criarProjeto(String nome, String descricao, String codigo){
         boolean podeCriar = !nome.isEmpty() && !descricao.isEmpty() && !codigo.isEmpty();
 
         if (podeCriar){
+            if(descricao.length() > 2000){
+                return ResponseEntity.ok("Descrição ultrapassa o limite de caracteres!");
+            }
+            codigo = codigo.replaceAll("\\s+", "").toUpperCase();
+            if(codigo.length() > 5) {
+                return ResponseEntity.ok("Código do projeto ultrapassa o limite de caracteres!");
+            } else if (codigo.length() < 3){
+                return ResponseEntity.ok("Insira um código maior para o projeto! (Mínimo de 3 caracteres, máximo de 5)");
+            }
             M_Projeto m_projeto = new M_Projeto();
             m_projeto.setNome(nome);
             m_projeto.setCodProjeto(codigo);
@@ -41,7 +51,7 @@ public class S_Projeto {
         List<M_Projeto> projetos = r_projeto.findAll();
         List<Projeto_Api> projetosApi = new ArrayList<>();
         for(M_Projeto projeto : projetos){
-            Projeto_Api projetoApi = new Projeto_Api(projeto.getNome(), projeto.getDescricao(), projeto.getCodProjeto());
+            Projeto_Api projetoApi = new Projeto_Api(String.valueOf(projeto.getId()), projeto.getNome(), projeto.getDescricao(), projeto.getCodProjeto());
             projetosApi.add(projetoApi);
         }
         return projetosApi;

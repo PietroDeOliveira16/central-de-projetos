@@ -8,7 +8,7 @@
         <h3>{{projeto.nomeProjeto}}</h3>
         <h5>{{projeto.codigoProjeto}}</h5>
         <p>{{projeto.descricaoProjeto}}</p>
-        <button (click)="saibaMais($event)" class="btn btn-success">Saiba mais >></button>
+        <button (click)="saibaMais(projeto.codigoProjeto)" class="btn btn-success">Saiba mais >></button>
         <hr>
     </div>
 </ng-template>

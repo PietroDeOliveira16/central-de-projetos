@@ -7,15 +7,10 @@ import { Projeto } from '../../model/projeto.type';
 })
 export class LandPageService {
   readonly apiGetProjetosUrl = "http://localhost:8080/getProjetos";
-  readonly apiSessionUrl = "http://localhost:8080/getSession;"
 
   constructor(private http: HttpClient) { }
 
   getProjetos(){
     return this.http.get<Projeto[]>(this.apiGetProjetosUrl);
-  }
-
-  getSession(){
-    return this.http.get(this.apiSessionUrl, { responseType: 'text' });
   }
 }
