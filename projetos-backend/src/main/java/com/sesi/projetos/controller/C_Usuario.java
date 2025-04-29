@@ -1,6 +1,7 @@
 package com.sesi.projetos.controller;
 
-import com.sesi.projetos.model.Usuario_Api;
+import com.sesi.projetos.model.LoginRequest;
+import com.sesi.projetos.model.CadastroRequest;
 import com.sesi.projetos.service.S_Usuario;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,12 @@ public class C_Usuario {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<String> postCadastrarUsuario(@RequestBody Usuario_Api usuarioApi){
+    public ResponseEntity<String> postCadastrarUsuario(@RequestBody CadastroRequest usuarioApi){
         return s_usuario.cadastrarUsuario(usuarioApi);
     }
 
-
+    @PostMapping("/login")
+    public ResponseEntity<String> postLogin(@RequestBody LoginRequest loginRequest){
+        return s_usuario.login(loginRequest);
+    }
 }

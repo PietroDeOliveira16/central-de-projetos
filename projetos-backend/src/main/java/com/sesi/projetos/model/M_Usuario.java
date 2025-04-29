@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuario")
+@DiscriminatorValue("USER")
 public class M_Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +14,7 @@ public class M_Usuario {
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
-    private String senha;
+    private String password;
     private String nome;
     @Column(length = 14)
     private String telefone;
@@ -39,12 +40,12 @@ public class M_Usuario {
         this.username = username;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNome() {
