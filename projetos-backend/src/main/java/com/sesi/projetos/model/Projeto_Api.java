@@ -1,19 +1,29 @@
 package com.sesi.projetos.model;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
 public class Projeto_Api {
     private String id;
     private String nomeProjeto;
     private String descricaoProjeto;
     private String codigoProjeto;
+    private List<String> diasEncontros;
+    private List<LocalTime> horarios;
 
     public Projeto_Api() {
     }
 
-    public Projeto_Api(String id, String nomeProjeto, String descricaoProjeto, String codigoProjeto) {
+    public Projeto_Api(String id, String nomeProjeto, String descricaoProjeto, String codigoProjeto, List<String> diasEncontros, List<LocalTime> horarios) {
         this.id = id;
         this.nomeProjeto = nomeProjeto;
         this.descricaoProjeto = descricaoProjeto;
         this.codigoProjeto = codigoProjeto;
+        this.diasEncontros = diasEncontros;
+        this.horarios = horarios;
     }
 
     public String getId() {
@@ -46,5 +56,21 @@ public class Projeto_Api {
 
     public void setCodigoProjeto(String codigoProjeto) {
         this.codigoProjeto = codigoProjeto;
+    }
+
+    public List<String> getDiasEncontros() {
+        return diasEncontros;
+    }
+
+    public void setDiasEncontros(List<String> diasEncontros) {
+        this.diasEncontros = diasEncontros;
+    }
+
+    public List<LocalTime> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<LocalTime> horarios) {
+        this.horarios = horarios;
     }
 }

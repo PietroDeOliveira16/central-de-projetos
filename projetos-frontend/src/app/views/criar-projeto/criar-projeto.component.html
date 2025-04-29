@@ -25,5 +25,29 @@
       </div>
       <div class="form-text obrigatorio">*Campo obrigatório</div>
     </div>
-    <button (click)="criarProjeto()" type="button" class="btn btn-success mt-3">Criar projeto</button>
+    <div class="mt-3">
+      <form>
+        <div class="mb-3">
+          <label class="form-label">Selecione os dias da semana em que os encontros do projeto acontecerão:</label>
+          <div class="form-check" *ngFor="let dia of dias.dias">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="dia.isChecked" name="dia" [value]="dia.dia">
+            <label class="form-check-label" for="segunda">{{dia.dia}}</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="horario" class="form-label">Horário fixo dos encontros:</label>
+          <div class="row">
+            <div class="col-2">
+              <label for="horario" class="form-label">Inicio</label>
+              <input type="time" [(ngModel)]="dias.horarioInicio" class="form-control" name="horario" placeholder="">
+            </div>
+            <div class="col-2">
+              <label for="horario" class="form-label">Término</label>
+              <input type="time" [(ngModel)]="dias.horarioFim" class="form-control" name="horario" placeholder="">
+            </div>
+          </div>
+        </div>
+      </form>      
+    </div>
+    <button (click)="criarProjeto()" type="button" class="btn btn-success mt-3 mb-3">Criar projeto</button>
 </div>
