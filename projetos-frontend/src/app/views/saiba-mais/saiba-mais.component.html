@@ -2,4 +2,14 @@
     <h1>{{ projetoSelecionado.nomeProjeto }}</h1>
     <h6>{{ projetoSelecionado.codigoProjeto }}</h6>
     <p>{{ projetoSelecionado.descricaoProjeto }}</p>
+    <div class="" *ngIf="dias && horas">
+        <p>Dia(s) de encontro do {{projetoSelecionado.nomeProjeto}}</p>
+        <ul>
+            <li class="" *ngFor="let dia of dias">
+                <p>{{ dia }}</p>
+            </li>
+        </ul>
+        <p>Horário de início e término do {{projetoSelecionado.nomeProjeto}}</p>
+        <p>{{horas[0]}} - {{horas[1]}}</p>
+    </div>
 </div>

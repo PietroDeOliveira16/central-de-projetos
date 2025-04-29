@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { LandPageService } from '../../service/land-page-service/land-page.service';
+import { ProjetoService } from '../../service/projeto-service/projeto.service';
 import { Projeto } from '../../model/projeto.type';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class LandPageComponent implements OnInit{
   constructor(private router: Router){}
 
-  service = inject(LandPageService);
+  service = inject(ProjetoService);
   projetos: Projeto[] = [];
   projetoVazio: boolean = false;
 

@@ -1,6 +1,8 @@
 package com.sesi.projetos.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sesi.projetos.model.CriarProjeto_Api;
+import com.sesi.projetos.model.M_DiasEcontrosProjeto;
 import com.sesi.projetos.model.M_Projeto;
 import com.sesi.projetos.model.Projeto_Api;
 import com.sesi.projetos.service.S_Projeto;
@@ -20,18 +22,18 @@ public class C_Projeto {
     }
 
     @PostMapping("/criarProjeto")
-    public ResponseEntity<String> postCriar(@RequestBody Projeto_Api projetoApi) {
-        return s_projeto.criarProjeto(projetoApi.getNomeProjeto(),
-                projetoApi.getDescricaoProjeto(), projetoApi.getCodigoProjeto());
-    }
-
-    @PostMapping("/criarProjeto/dias")
-    public ResponseEntity<String> postCriarDias(@RequestBody String dados){
-        return s_projeto.criarProjetoDias(dados);
+    public ResponseEntity<String> postCriar(@RequestBody CriarProjeto_Api projetoApi) {
+        return s_projeto.criarProjeto(projetoApi.getProjetoApi().getNomeProjeto(),
+                projetoApi.getProjetoApi().getDescricaoProjeto(), projetoApi.getProjetoApi().getCodigoProjeto(), projetoApi.getDados().toString());
     }
 
     @GetMapping("/getProjetos")
     public List<Projeto_Api> postGetProjetos(){
         return s_projeto.getProjetosApi();
+    }
+
+    @PostMapping("/getDiasProjeto")
+    public ResponseEntity<String> postDiasProjetos(@RequestBody String codigoProjeto){
+        return s_projeto.getDiasProjeto(codigoProjeto);
     }
 }

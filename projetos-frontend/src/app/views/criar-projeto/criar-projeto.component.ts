@@ -36,15 +36,7 @@ export class CriarProjetoComponent {
       {
         dia:"Sexta-feira",
         isChecked:false
-      },
-      {
-        dia:"Sábado",
-        isChecked:false
-      },
-      {
-        dia:"Domingo",
-        isChecked:false
-      },
+      }
     ], 
     horarioInicio:"14:00",
     horarioFim:"16:00"
@@ -66,13 +58,9 @@ export class CriarProjetoComponent {
     });
     diasFormatados.push(this.dias.horarioInicio);
     diasFormatados.push(this.dias.horarioFim);
-    diasFormatados.push(this.codigo);
     console.log("Dias formatados: ", diasFormatados);
-    this.criarProjetoService.postCriarProjeto(this.nome, this.descricao, this.codigo).subscribe((response: String) => {
+    this.criarProjetoService.postCriarProjeto(this.nome, this.descricao, this.codigo, diasFormatados).subscribe((response: String) => {
       Swal.default.fire({title:response});
-      this.criarProjetoService.postCriarDiasProjeto(diasFormatados).subscribe((response:String) => {
-        Swal.default.fire({title:response});
-      })
     });
   }
 
