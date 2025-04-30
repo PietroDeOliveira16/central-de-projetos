@@ -6,14 +6,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuario")
-@DiscriminatorValue("USER")
 public class M_Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
-    @Column(nullable = false)
     private String password;
     private String nome;
     @Column(length = 14)

@@ -11,6 +11,4 @@ import java.util.Optional;
 @Repository
 public interface R_Usuario extends JpaRepository<M_Usuario, Long> {
     M_Usuario findByUsername(String username);
-//    @Query(value = "select * from usuario where username = :username;", nativeQuery = true)
-//    Optional<M_Usuario> findUserByUsername(@Param("username") String username);
 }
