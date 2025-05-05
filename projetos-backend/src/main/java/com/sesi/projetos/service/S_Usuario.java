@@ -1,6 +1,6 @@
 package com.sesi.projetos.service;
 
-import com.sesi.projetos.auth.jwt.service.JWTService;
+import com.sesi.projetos.auth.jwt.service.JwtService;
 import com.sesi.projetos.auth.util.SecurityParameters;
 import com.sesi.projetos.model.LoginRequest;
 import com.sesi.projetos.model.M_Usuario;
@@ -23,7 +23,7 @@ public class S_Usuario {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JWTService jwtService;
+    private JwtService jwtService;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(SecurityParameters.ENCODER_STRENGTH);
 
@@ -58,9 +58,9 @@ public class S_Usuario {
                         new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
                 );
         if(authentication.isAuthenticated()){
-            return ResponseEntity.ok("Login feito com sucesso! Token: " + jwtService.generateToken(loginRequest.getUsername()));
+            return ResponseEntity.ok(jwtService.generateToken(loginRequest.getUsername()));
         }
 
-        return ResponseEntity.ok("Erro ao tentar logar.");
+        return ResponseEntity.ok("");
     }
 }

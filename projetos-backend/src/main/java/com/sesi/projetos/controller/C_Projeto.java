@@ -1,13 +1,9 @@
 package com.sesi.projetos.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.sesi.projetos.model.CriarProjeto_Api;
-import com.sesi.projetos.model.M_DiasEcontrosProjeto;
-import com.sesi.projetos.model.M_Projeto;
-import com.sesi.projetos.model.Projeto_Api;
+import com.sesi.projetos.model.CriarProjetoRequest;
+import com.sesi.projetos.model.ProjetoApi;
 import com.sesi.projetos.service.S_Projeto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +18,13 @@ public class C_Projeto {
     }
 
     @PostMapping("/criarProjeto")
-    public ResponseEntity<String> postCriar(@RequestBody CriarProjeto_Api projetoApi) {
-        return s_projeto.criarProjeto(projetoApi.getProjetoApi().getNomeProjeto(),
-                projetoApi.getProjetoApi().getDescricaoProjeto(), projetoApi.getProjetoApi().getCodigoProjeto(), projetoApi.getDados().toString());
+    public ResponseEntity<String> postCriar(@RequestBody CriarProjetoRequest criarProjetoRequest) {
+        return s_projeto.criarProjeto(criarProjetoRequest.getProjetoApi().getNomeProjeto(),
+                criarProjetoRequest.getProjetoApi().getDescricaoProjeto(), criarProjetoRequest.getProjetoApi().getCodigoProjeto(), criarProjetoRequest.getDados().toString());
     }
 
     @GetMapping("/getProjetos")
-    public List<Projeto_Api> postGetProjetos(){
+    public List<ProjetoApi> postGetProjetos(){
         return s_projeto.getProjetosApi();
     }
 

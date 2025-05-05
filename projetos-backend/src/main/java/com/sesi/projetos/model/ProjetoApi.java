@@ -1,12 +1,9 @@
 package com.sesi.projetos.model;
 
-import org.springframework.cglib.core.Local;
-
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-public class Projeto_Api {
+public class ProjetoApi {
     private String id;
     private String nomeProjeto;
     private String descricaoProjeto;
@@ -14,10 +11,10 @@ public class Projeto_Api {
     private List<String> diasEncontros;
     private List<LocalTime> horarios;
 
-    public Projeto_Api() {
+    public ProjetoApi() {
     }
 
-    public Projeto_Api(String id, String nomeProjeto, String descricaoProjeto, String codigoProjeto, List<String> diasEncontros, List<LocalTime> horarios) {
+    public ProjetoApi(String id, String nomeProjeto, String descricaoProjeto, String codigoProjeto, List<String> diasEncontros, List<LocalTime> horarios) {
         this.id = id;
         this.nomeProjeto = nomeProjeto;
         this.descricaoProjeto = descricaoProjeto;

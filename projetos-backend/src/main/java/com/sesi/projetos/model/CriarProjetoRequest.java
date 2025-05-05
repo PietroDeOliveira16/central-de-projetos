@@ -1,14 +1,14 @@
 package com.sesi.projetos.model;
 
-public class CriarProjeto_Api {
-    private Projeto_Api projetoApi;
+public class CriarProjetoRequest {
+    private ProjetoApi projetoApi;
     private Object dados;
 
-    public Projeto_Api getProjetoApi() {
+    public ProjetoApi getProjetoApi() {
         return projetoApi;
     }
 
-    public void setProjetoApi(Projeto_Api projetoApi) {
+    public void setProjetoApi(ProjetoApi projetoApi) {
         this.projetoApi = projetoApi;
     }
 
