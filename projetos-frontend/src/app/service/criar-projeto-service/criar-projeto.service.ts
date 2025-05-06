@@ -6,8 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CriarProjetoService {
-  readonly apiCriarUrl = "http://localhost:8080/criarProjeto";
-  readonly apiCriarDatasUrl = "http://localhost:8080/criarProjeto/dias";
+  readonly apiCriarUrl = "http://localhost:8080/projeto";
 
   constructor(private http: HttpClient) { }
 
@@ -23,6 +22,6 @@ export class CriarProjetoService {
       dados: dias
     }
 
-    return this.http.post(this.apiCriarUrl, request, { responseType: 'text' });
+    return this.http.post<any>(this.apiCriarUrl + "/criarProjeto", request, { withCredentials: true, responseType: 'text' as 'json' });
   }
 }

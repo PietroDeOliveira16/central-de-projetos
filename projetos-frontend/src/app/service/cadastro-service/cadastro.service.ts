@@ -6,7 +6,7 @@ import { Cadastro } from '../../model/cadastro.type';
   providedIn: 'root'
 })
 export class CadastroService {
-  readonly apiCadastroUrl = "http://localhost:8080/cadastro";
+  readonly apiCadastroUrl = "http://localhost:8080/auth";
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +19,6 @@ export class CadastroService {
       email: email,
       cpf: cpf
     };
-    return this.http.post(this.apiCadastroUrl, cadastro, { responseType: 'text' });
+    return this.http.post(this.apiCadastroUrl + "/cadastro", cadastro, { responseType: 'text' });
   }
 }

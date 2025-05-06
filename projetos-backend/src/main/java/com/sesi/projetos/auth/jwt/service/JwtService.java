@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -24,10 +28,8 @@ public class JwtService {
 
     public JwtService(){
         try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey secretKey = keyGenerator.generateKey();
-            SECRET_KEY = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-        } catch (NoSuchAlgorithmException e) {
+            SECRET_KEY = Files.readString(Paths.get("C:/Users/Aluno/Desktop/Nova pasta/projetos-backend/src/main/resources/secret.key"));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

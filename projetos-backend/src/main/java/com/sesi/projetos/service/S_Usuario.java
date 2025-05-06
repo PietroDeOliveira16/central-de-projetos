@@ -6,6 +6,9 @@ import com.sesi.projetos.model.LoginRequest;
 import com.sesi.projetos.model.M_Usuario;
 import com.sesi.projetos.model.CadastroRequest;
 import com.sesi.projetos.repository.R_Usuario;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.SameSiteCookies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,13 +55,20 @@ public class S_Usuario {
         }
     }
 
-    public ResponseEntity<String> login(LoginRequest loginRequest) {
+    public ResponseEntity<String> login(LoginRequest loginRequest, HttpServletResponse response) {
         Authentication authentication = authenticationManager
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
                 );
         if(authentication.isAuthenticated()){
-            return ResponseEntity.ok(jwtService.generateToken(loginRequest.getUsername()));
+            String token = jwtService.generateToken(loginRequest.getUsername());
+            Cookie cookie = new Cookie("sessionToken", token);
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true);
+            cookie.setMaxAge(24 * 60 * 60);
+            response.addCookie(cookie);
+            return ResponseEntity.ok("Cookie com o token enviado corretamente!");
         }
 
         return ResponseEntity.ok("");

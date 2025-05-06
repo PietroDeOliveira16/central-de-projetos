@@ -6,11 +6,11 @@ import { BehaviorSubject, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  readonly apiUrlLogin = "http://localhost:8080/login";
+  readonly apiUrlLogin = "http://localhost:8080/auth";
 
   constructor(private http: HttpClient) { }
 
   postLogar(username:String, password:String){
-    return this.http.post(this.apiUrlLogin, {username, password}, { responseType: 'text' });
+    return this.http.post<any>(this.apiUrlLogin + "/login", {username, password}, { withCredentials: true, responseType: 'text' as 'json' });
   }
 }
