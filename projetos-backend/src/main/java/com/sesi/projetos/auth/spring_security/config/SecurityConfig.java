@@ -5,6 +5,7 @@ import com.sesi.projetos.auth.util.SecurityParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -46,6 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 SecurityParameters.PUBLIC_ENDPOINTS.toArray(new String[0])
                         ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/criarProjeto").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .httpBasic(Customizer.withDefaults())
