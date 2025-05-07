@@ -1,21 +1,16 @@
 package com.sesi.projetos.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sesi.projetos.model.M_DiasEcontrosProjeto;
 import com.sesi.projetos.model.M_Projeto;
-import com.sesi.projetos.model.Projeto_Api;
+import com.sesi.projetos.model.ProjetoApi;
 import com.sesi.projetos.repository.R_DiasEncontrosProjeto;
 import com.sesi.projetos.repository.R_Projeto;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +25,6 @@ public class S_Projeto {
 
     public ResponseEntity<String> criarProjeto(String nome, String descricao, String codigo, String dados) {
         boolean podeCriar = !nome.isEmpty() && !descricao.isEmpty() && !codigo.isEmpty();
-        boolean continuarCriacao = false;
 
         if (podeCriar) {
             if (descricao.length() > 2000) {
@@ -104,9 +98,9 @@ public class S_Projeto {
         }
     }
 
-    public List<Projeto_Api> getProjetosApi() {
+    public List<ProjetoApi> getProjetosApi() {
         List<M_Projeto> projetos = r_projeto.findAll();
-        List<Projeto_Api> projetosApi = new ArrayList<>();
+        List<ProjetoApi> projetosApi = new ArrayList<>();
         for (M_Projeto projeto : projetos) {
             List<M_DiasEcontrosProjeto> m_diasEcontrosProjetos = r_diasEncontrosProjeto.findDiasByProjetoId(projeto.getId());
             List<String> dias = new ArrayList<>();
@@ -121,7 +115,7 @@ public class S_Projeto {
             } catch (Exception ex) {
                 horarios = null;
             }
-            Projeto_Api projetoApi = new Projeto_Api(String.valueOf(projeto.getId()), projeto.getNome(), projeto.getDescricao(), projeto.getCodProjeto(), dias, horarios);
+            ProjetoApi projetoApi = new ProjetoApi(String.valueOf(projeto.getId()), projeto.getNome(), projeto.getDescricao(), projeto.getCodProjeto(), dias, horarios);
             projetosApi.add(projetoApi);
         }
         return projetosApi;

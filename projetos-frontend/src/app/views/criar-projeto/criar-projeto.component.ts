@@ -59,7 +59,7 @@ export class CriarProjetoComponent {
     diasFormatados.push(this.dias.horarioInicio);
     diasFormatados.push(this.dias.horarioFim);
     console.log("Dias formatados: ", diasFormatados);
-    this.criarProjetoService.postCriarProjeto(this.nome, this.descricao, this.codigo, diasFormatados).subscribe((response: String) => {
+    this.criarProjetoService.postCriarProjeto(this.nome, this.descricao, this.codigo, diasFormatados).subscribe((response) => {
       Swal.default.fire({title:response});
     });
   }
