@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Cadastro } from '../../model/cadastro.type';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroService {
-  readonly apiCadastroUrl = "http://localhost:8080/auth";
-
   constructor(private http: HttpClient) { }
 
   postCadastrarUsuario(username:String, senha:String, nome:String, telefone:String, email:String, cpf:String){
@@ -19,6 +18,6 @@ export class CadastroService {
       email: email,
       cpf: cpf
     };
-    return this.http.post(this.apiCadastroUrl + "/cadastro", cadastro, { responseType: 'text' });
+    return this.http.post(`${environment.authApiUrl}/cadastro`, cadastro, { responseType: 'text' });
   }
 }

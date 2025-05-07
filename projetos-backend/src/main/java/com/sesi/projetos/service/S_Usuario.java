@@ -8,7 +8,6 @@ import com.sesi.projetos.model.CadastroRequest;
 import com.sesi.projetos.repository.R_Usuario;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.tomcat.util.http.SameSiteCookies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -60,17 +59,27 @@ public class S_Usuario {
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
                 );
-        if(authentication.isAuthenticated()){
+        if (authentication.isAuthenticated()) {
             String token = jwtService.generateToken(loginRequest.getUsername());
-            Cookie cookie = new Cookie("sessionToken", token);
-            cookie.setPath("/");
-            cookie.setHttpOnly(true);
-            cookie.setSecure(true);
-            cookie.setMaxAge(24 * 60 * 60);
-            response.addCookie(cookie);
-            return ResponseEntity.ok("Cookie com o token enviado corretamente!");
+            response.addCookie(cookieCreation("sessionToken", token,
+                    "/", true, true, SecurityParameters.TOKEN_COOKIE_INT_MAX_AGE_SECS, false));
+            response.addCookie(cookieCreation("sessionCookie", "sessionlogged",
+                    "/", false, true, SecurityParameters.TOKEN_COOKIE_INT_MAX_AGE_SECS, false));
+            return ResponseEntity.ok("Login efetuado com sucesso!");
         }
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("Erro ao logar, verifique suas informações e tente novamente.");
+    }
+
+    private Cookie cookieCreation(String name, String value, String path, boolean httpOnly, boolean secure, int maxAge, boolean sameSite){
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath(path);
+        cookie.setHttpOnly(httpOnly);
+        cookie.setSecure(secure);
+        cookie.setMaxAge(maxAge);
+        if(!sameSite){
+            cookie.setAttribute("SameSite", "None");
+        }
+        return cookie;
     }
 }

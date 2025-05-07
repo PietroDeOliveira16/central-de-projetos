@@ -1,5 +1,6 @@
 package com.sesi.projetos.auth.jwt.service;
 
+import com.sesi.projetos.auth.util.SecurityParameters;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -42,7 +43,7 @@ public class JwtService {
                 .claims().add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .expiration(new Date(System.currentTimeMillis() + SecurityParameters.TOKEN_COOKIE_MAX_AGE_MILIS))
                 .and()
                 .signWith(getKey())
                 .compact();

@@ -13,8 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -39,12 +37,12 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        Cookie[] authHeader = request.getCookies();
+        Cookie[] cookies = request.getCookies();
         String token = null;
         String username = null;
 
-        if (authHeader != null) {
-            for (Cookie cookie : authHeader) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
                 if ("sessionToken".equals(cookie.getName())) {
                     token = cookie.getValue();
                     break;

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../service/auth-service/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,10 @@ export class LoginComponent {
 
   logar(){
     this.service.postLogar(this.username, this.password).subscribe((response) => {
-      console.log(response);
+      if(response){
+        Swal.fire({title:response});
+        this.router.navigate(['/home']);
+      }
     });
   }
 }
