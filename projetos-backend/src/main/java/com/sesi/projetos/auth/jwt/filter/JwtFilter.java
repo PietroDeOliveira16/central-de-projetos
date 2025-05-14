@@ -31,13 +31,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
+        Cookie[] cookies = request.getCookies();
 
-        if(SecurityParameters.PUBLIC_ENDPOINTS.contains(path)){
+        if(SecurityParameters.PUBLIC_ENDPOINTS.contains(path) && cookies == null){
             filterChain.doFilter(request, response);
             return;
         }
 
-        Cookie[] cookies = request.getCookies();
         String token = null;
         String username = null;
 
@@ -66,6 +66,10 @@ public class JwtFilter extends OncePerRequestFilter {
             UserDetails userDetails = context.getBean(CustomUserDetailsService.class).loadUserByUsername(username);
 
             if (jwtService.validateToken(token, userDetails)) {
+                if(path.equals("/auth/login")){
+                    response.sendError(HttpServletResponse.SC_CONFLICT, "Conta já logada!");
+                    return;
+                }
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails,
                                 null,

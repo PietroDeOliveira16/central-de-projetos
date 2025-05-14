@@ -23,6 +23,7 @@ export class LoginComponent {
       if(response){
         Swal.fire({title:response});
         this.router.navigate(['/home']);
+        this.service.setLoggedInSubject(true);
       }
     });
   }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,6 +19,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,6 +41,11 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+    ClearSiteDataHeaderWriter headerWriter = new ClearSiteDataHeaderWriter(
+            ClearSiteDataHeaderWriter.Directive.COOKIES, ClearSiteDataHeaderWriter.Directive.STORAGE, ClearSiteDataHeaderWriter.Directive.CACHE
+    );
+    HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(headerWriter);
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -47,12 +56,24 @@ public class SecurityConfig {
                         .requestMatchers(
                                 SecurityParameters.PUBLIC_ENDPOINTS.toArray(new String[0])
                         ).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/criarProjeto").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, SecurityParameters.ADMIN_POST_ENDPOINTS.toArray(new String[0])).hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.GET, SecurityParameters.ADMIN_GET_ENDPOINTS.toArray(new String[0])).hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.POST, SecurityParameters.PROFESSOR_POST_ENDPOINTS.toArray(new String[0])).hasRole("PROFESSOR")
+//                        .requestMatchers(HttpMethod.GET, SecurityParameters.PROFESSOR_GET_ENDPOINTS.toArray(new String[0])).hasRole("PROFESSOR")
+//                        .requestMatchers(HttpMethod.POST, SecurityParameters.ALUNO_POST_ENDPOINTS.toArray(new String[0])).hasRole("ALUNO")
+//                        .requestMatchers(HttpMethod.GET, SecurityParameters.ALUNO_GET_ENDPOINTS.toArray(new String[0])).hasRole("ALUNO")
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT))
+                        .invalidateHttpSession(true)
+                        .deleteCookies("sessionToken", "sessionCookie")
+                        .addLogoutHandler(clearSiteData)
+                )
                 .build();
     }
 
