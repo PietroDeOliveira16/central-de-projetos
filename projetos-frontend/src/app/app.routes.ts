@@ -5,8 +5,8 @@ import { LoginComponent } from './views/login/login.component';
 import { CadastroComponent } from './views/cadastro/cadastro.component';
 import { SaibaMaisComponent } from './views/saiba-mais/saiba-mais.component';
 import { HomeComponent } from './views/home/home.component';
-import { LogoutComponent } from './components/logout/logout.component';
-import { jwtGuard } from './auth/guard/jwt.guard';
+import { jwtGuard } from './auth/jwt_guard/jwt.guard';
+import { loginGuard } from './auth/login_guard/login.guard';
 
 export const routes: Routes = [
     {
@@ -20,7 +20,8 @@ export const routes: Routes = [
     },
     {
         path:'login',
-        component:LoginComponent
+        component:LoginComponent,
+        canActivate:[loginGuard]
     },
     {
         path:'cadastro',
@@ -39,9 +40,5 @@ export const routes: Routes = [
         path:'home',
         component:HomeComponent,
         canActivate:[jwtGuard]
-    },
-    {
-        path:'logout',
-        component:LogoutComponent
     }
 ];

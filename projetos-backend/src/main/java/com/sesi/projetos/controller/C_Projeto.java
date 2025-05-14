@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/projeto")
+@RequestMapping("projeto")
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class C_Projeto {
     private final S_Projeto s_projeto;
@@ -18,7 +18,7 @@ public class C_Projeto {
         this.s_projeto = s_projeto;
     }
 
-    @PostMapping("/criarProjeto")
+    @PostMapping("/admin/criarProjeto")
     public ResponseEntity<String> postCriar(@RequestBody CriarProjetoRequest criarProjetoRequest) {
         return s_projeto.criarProjeto(criarProjetoRequest.getProjetoApi().getNomeProjeto(),
                 criarProjetoRequest.getProjetoApi().getDescricaoProjeto(), criarProjetoRequest.getProjetoApi().getCodigoProjeto(), criarProjetoRequest.getDados().toString());

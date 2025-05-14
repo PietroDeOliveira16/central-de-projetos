@@ -21,6 +21,6 @@ export class CriarProjetoService {
       dados: dias
     }
 
-    return this.http.post<any>(`${environment.projetoApiUrl}/criarProjeto`, request, { withCredentials: true, responseType: 'text' as 'json' });
+    return this.http.post<any>(`${environment.projetoApiUrl}/admin/criarProjeto`, request, { withCredentials: true, responseType: 'text' as 'json' });
   }
 }

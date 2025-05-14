@@ -1,5 +1,6 @@
 package com.sesi.projetos.model;
 
+import com.sesi.projetos.auth.spring_security.model.UserRole;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class M_Usuario {
     private String cpf;
     private LocalDateTime dataCriacao = LocalDateTime.now();
     private boolean isActive = true;
+    private UserRole role;
 
     public Long getId() {
         return id;
@@ -92,5 +94,13 @@ public class M_Usuario {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
