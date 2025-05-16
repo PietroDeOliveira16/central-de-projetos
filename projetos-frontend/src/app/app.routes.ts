@@ -7,6 +7,8 @@ import { SaibaMaisComponent } from './views/saiba-mais/saiba-mais.component';
 import { HomeComponent } from './views/home/home.component';
 import { jwtGuard } from './auth/jwt_guard/jwt.guard';
 import { loginGuard } from './auth/login_guard/login.guard';
+import { adminGuard } from './auth/admin_guard/admin.guard';
+import { GerenciarUsersComponent } from './views/gerenciar-users/gerenciar-users.component';
 
 export const routes: Routes = [
     {
@@ -30,7 +32,7 @@ export const routes: Routes = [
     {
         path:'criar-projeto',
         component:CriarProjetoComponent,
-        canActivate:[jwtGuard]
+        canActivate:[jwtGuard, adminGuard]
     },
     {
         path:'saiba-mais',
@@ -40,5 +42,10 @@ export const routes: Routes = [
         path:'home',
         component:HomeComponent,
         canActivate:[jwtGuard]
+    },
+    {
+        path:'gerenciar-users',
+        component:GerenciarUsersComponent,
+        canActivate:[jwtGuard, adminGuard]
     }
 ];

@@ -8,6 +8,7 @@ public class SecurityParameters {
     public static final List<String> PUBLIC_ENDPOINTS = Arrays.asList(
             "/auth/login",
             "/auth/cadastro",
+            "/auth/getUsuarios",
             "/projeto/getProjetos",
             "/projeto/getDiasProjeto"
     );

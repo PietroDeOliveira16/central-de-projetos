@@ -1,6 +1,6 @@
 package com.sesi.projetos.auth.jwt.filter;
 
-import com.sesi.projetos.auth.jwt.service.JwtService;
+import com.sesi.projetos.auth.jwt.service.S_Jwt;
 import com.sesi.projetos.auth.spring_security.service.CustomUserDetailsService;
 import com.sesi.projetos.auth.util.SecurityParameters;
 import jakarta.servlet.FilterChain;
@@ -23,7 +23,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtService jwtService;
+    private S_Jwt SJwt;
 
     @Autowired
     ApplicationContext context;
@@ -52,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (token != null) {
             try {
-                username = jwtService.extractUsernameFromToken(token);
+                username = SJwt.extractUsernameFromToken(token);
             }catch(Exception e){
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
                 return;
@@ -65,7 +65,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = context.getBean(CustomUserDetailsService.class).loadUserByUsername(username);
 
-            if (jwtService.validateToken(token, userDetails)) {
+            if (SJwt.validateToken(token, userDetails)) {
                 if(path.equals("/auth/login")){
                     response.sendError(HttpServletResponse.SC_CONFLICT, "Conta já logada!");
                     return;

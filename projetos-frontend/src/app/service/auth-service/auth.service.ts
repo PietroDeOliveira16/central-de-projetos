@@ -16,18 +16,27 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
+  private roleSubject = new BehaviorSubject<string>('');
+  public role$: Observable<string> = this.roleSubject.asObservable();
+
 
   constructor(private http: HttpClient, private router: Router) { 
     const session = this.getSession();
+    const sessionRoleString = this.getSessionRole();
     this.isLoggedInSubject.next(!!session);
+    this.roleSubject.next(sessionRoleString);
   }
 
-  getSession(): boolean{
+  private getSession(): boolean{
     if(this.cookieService.get('sessionCookie')){
       return true;
     } else {
       return false;
     }
+  }
+
+  getSessionRole(): string{
+    return this.cookieService.get('sessionCookie');
   }
 
   postLogar(username:String, password:String){
@@ -57,7 +66,8 @@ export class AuthService {
               icon: "success"
             });
             this.router.navigate(['/login']);
-            this.isLoggedInSubject.next(false)
+            this.isLoggedInSubject.next(false);
+            this.roleSubject.next('');
           });
           localStorage.clear();
           sessionStorage.clear();
@@ -73,7 +83,11 @@ export class AuthService {
     }
   }
 
-  setLoggedInSubject(value: boolean){
+  setLoginSubject(value: boolean){
     this.isLoggedInSubject.next(value);
+  }
+
+  setRoleSubject(value: string){
+    this.roleSubject.next(value);
   }
 }

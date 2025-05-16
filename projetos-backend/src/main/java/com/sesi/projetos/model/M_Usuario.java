@@ -100,6 +100,10 @@ public class M_Usuario {
         return role;
     }
 
+    public String getRoleString(){
+        return role.toString();
+    }
+
     public void setRole(UserRole role) {
         this.role = role;
     }
