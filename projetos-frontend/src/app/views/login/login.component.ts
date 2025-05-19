@@ -23,7 +23,8 @@ export class LoginComponent {
       if(response){
         Swal.fire({title:response});
         this.router.navigate(['/home']);
-        this.service.setLoggedInSubject(true);
+        this.service.setLoginSubject(true);
+        this.service.setRoleSubject(this.service.getSessionRole());
       }
     });
   }

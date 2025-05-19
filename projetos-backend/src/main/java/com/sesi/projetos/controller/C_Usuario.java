@@ -1,14 +1,14 @@
 package com.sesi.projetos.controller;
 
 import com.sesi.projetos.auth.spring_security.model.UserRole;
-import com.sesi.projetos.model.AtualizaRoleRequest;
-import com.sesi.projetos.model.LoginRequest;
-import com.sesi.projetos.model.CadastroRequest;
+import com.sesi.projetos.model.*;
 import com.sesi.projetos.service.S_Usuario;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("auth")
@@ -33,5 +33,10 @@ public class C_Usuario {
     @PostMapping("/admin/atualizarRole")
     public ResponseEntity<String> postAtualizarRole(@RequestBody AtualizaRoleRequest atualizaRoleRequest) {
         return s_usuario.atualizarRole(atualizaRoleRequest);
+    }
+
+    @GetMapping("/getUsuarios")
+    public List<GetUsuariosResponse> getUsuarios(){
+        return s_usuario.getUsuarios();
     }
 }

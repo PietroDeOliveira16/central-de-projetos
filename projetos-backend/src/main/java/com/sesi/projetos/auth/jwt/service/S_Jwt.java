@@ -8,26 +8,21 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtService {
+public class S_Jwt {
 
     private String SECRET_KEY = "";
 
-    public JwtService(){
+    public S_Jwt(){
         try {
             SECRET_KEY = Files.readString(Paths.get("C:/Users/Aluno/Desktop/Nova pasta/projetos-backend/src/main/resources/secret.key"));
         } catch (IOException e) {

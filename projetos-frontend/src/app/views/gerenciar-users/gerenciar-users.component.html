@@ -1,0 +1,35 @@
+<div class="container">
+          <legend>Gerenciamento de Cargo de Usuário</legend>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">Usuário</label>
+            <select type="text" id="disabledTextInput" class="form-select" [(ngModel)]="usuarioSelecionado">
+                <option value="">Selecione um usuario</option>
+                <option *ngIf="semUsuarios == false; then usuariosTemplate else semUsuariosTemp">Nenhum usuário disponivel</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="disabledSelect" class="form-label">Cargo</label>
+            <select id="disabledSelect" class="form-select" [(ngModel)]="roleSelecionada">
+              <option value="" selected>Selecione um cargo</option>
+              <option value="ADMIN">ADMIN</option>
+              <option value="PROFESSOR">PROFESSOR</option>
+              <option value="ALUNO">ALUNO</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary" (click)="alterarCargo()">Salvar</button>
+
+      
+    <ng-template #usuariosTemplate>
+        <option *ngFor="let usuario of usuarios"
+           [value]="usuario.id"
+        >
+        {{usuario.nome}} ({{usuario.role}})
+        </option>
+    </ng-template>
+
+    <ng-template #semUsuariosTemp>
+        <option>Nenhum usuário disponível</option>
+    </ng-template>
+</div>
+
+
