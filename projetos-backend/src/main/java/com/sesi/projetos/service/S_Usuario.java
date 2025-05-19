@@ -99,7 +99,7 @@ public class S_Usuario {
         }
         try{
             r_usuario.updateUserRole(usuario.get().getUsername(), atualizaRoleRequest.getRole());
-            return ResponseEntity.ok("Cargo de " + usuario.get().getUsername() + " alterado com sucesso.");
+            return ResponseEntity.ok("Cargo de " + usuario.get().getNome() + " alterado com sucesso.");
         } catch (Exception e){
             return ResponseEntity.ok("Erro interno do banco de dados. Tente novamente mais tarde.");
         }
