@@ -1,4 +1,4 @@
-package com.sesi.projetos.model;
+package com.sesi.projetos.model.projeto.classes;
 
 import jakarta.persistence.*;
 

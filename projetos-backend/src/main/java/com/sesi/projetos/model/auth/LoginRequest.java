@@ -1,4 +1,4 @@
-package com.sesi.projetos.model;
+package com.sesi.projetos.model.auth;
 
 public class LoginRequest {
     private String username;

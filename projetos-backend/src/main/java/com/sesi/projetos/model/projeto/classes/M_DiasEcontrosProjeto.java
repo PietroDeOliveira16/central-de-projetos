@@ -1,8 +1,7 @@
-package com.sesi.projetos.model;
+package com.sesi.projetos.model.projeto.classes;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity

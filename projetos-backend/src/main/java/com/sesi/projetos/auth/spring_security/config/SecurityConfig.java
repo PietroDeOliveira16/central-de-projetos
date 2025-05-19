@@ -57,7 +57,7 @@ public class SecurityConfig {
                                 SecurityParameters.PUBLIC_ENDPOINTS.toArray(new String[0])
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, SecurityParameters.ADMIN_POST_ENDPOINTS.toArray(new String[0])).hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.GET, SecurityParameters.ADMIN_GET_ENDPOINTS.toArray(new String[0])).hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, SecurityParameters.ADMIN_GET_ENDPOINTS.toArray(new String[0])).hasRole("ADMIN")
 //                        .requestMatchers(HttpMethod.POST, SecurityParameters.PROFESSOR_POST_ENDPOINTS.toArray(new String[0])).hasRole("PROFESSOR")
 //                        .requestMatchers(HttpMethod.GET, SecurityParameters.PROFESSOR_GET_ENDPOINTS.toArray(new String[0])).hasRole("PROFESSOR")
 //                        .requestMatchers(HttpMethod.POST, SecurityParameters.ALUNO_POST_ENDPOINTS.toArray(new String[0])).hasRole("ALUNO")

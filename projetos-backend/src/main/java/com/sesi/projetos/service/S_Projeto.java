@@ -1,11 +1,12 @@
 package com.sesi.projetos.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sesi.projetos.model.M_DiasEcontrosProjeto;
-import com.sesi.projetos.model.M_Projeto;
-import com.sesi.projetos.model.ProjetoApi;
+import com.sesi.projetos.model.projeto.classes.*;
+import com.sesi.projetos.model.projeto.interfaces.I_ProjetosSafe;
+import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import com.sesi.projetos.repository.R_DiasEncontrosProjeto;
 import com.sesi.projetos.repository.R_Projeto;
+import com.sesi.projetos.repository.R_Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ import java.util.List;
 public class S_Projeto {
     @Autowired
     private R_Projeto r_projeto;
+    @Autowired
+    private R_Usuario r_usuario;
     @Autowired
     private R_DiasEncontrosProjeto r_diasEncontrosProjeto;
 
@@ -133,5 +136,28 @@ public class S_Projeto {
         response.append(horarioDosDias.getDataEncontroInicio()).append(";");
         response.append(horarioDosDias.getDataEncontroTermino()).append(";");
         return ResponseEntity.ok(response.toString());
+    }
+
+    public List<GetProjetosSafeResponse> getProjetosSafe(){
+        List<I_ProjetosSafe> projetosSafesInterface = r_projeto.findProjetosInterface();
+        List<GetProjetosSafeResponse> projetosResponse = new ArrayList<>();
+        for(I_ProjetosSafe projeto : projetosSafesInterface){
+            projetosResponse.add(new GetProjetosSafeResponse(projeto.getNome(), projeto.getcodProjeto()));
+        }
+
+        return projetosResponse;
+    }
+
+    public ResponseEntity<String> editarProjeto(EditarProjetoRequest editarProjetoRequest) {
+        if(!editarProjetoRequest.getCodigoProjeto().isEmpty() && !editarProjetoRequest.getCpfsMembrosDoProjeto().isEmpty()){
+            M_Projeto projeto = r_projeto.findProjetoByCodigo(editarProjetoRequest.getCodigoProjeto());
+            List<M_Usuario> membros = new ArrayList<>();
+            for(String cpf : editarProjetoRequest.getCpfsMembrosDoProjeto()){
+                membros.add(r_usuario.findByCpf(cpf));
+            }
+            return null;
+        }
+
+        return null;
     }
 }
