@@ -5,7 +5,7 @@ import { ProjetoService } from '../../service/projeto-service/projeto.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { UsuarioService } from '../../service/usuario-service/usuario.service';
-import { elementAt } from 'rxjs';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -41,14 +41,14 @@ export class GerenciarProjetosComponent implements OnInit{
     console.log(this.inputsProfessor);
     console.log(this.inputsAluno);
     this.inputsProfessor.forEach(element => {
-      inputsCpfs.push('' + element.value);
+      inputsCpfs.push(element.value);
     })
     this.inputsAluno.forEach(element => {
-      inputsCpfs.push('' + element.value);
+      inputsCpfs.push(element.value);
     });
     console.log(inputsCpfs);
     this.service.editarProjeto(this.projetoSelecionado, inputsCpfs).subscribe((response) => {
-
+      Swal.fire({title:response});
     })
   }
 
