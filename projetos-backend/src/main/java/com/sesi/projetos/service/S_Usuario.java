@@ -3,7 +3,12 @@ package com.sesi.projetos.service;
 import com.sesi.projetos.auth.jwt.service.S_Jwt;
 import com.sesi.projetos.auth.spring_security.model.UserRole;
 import com.sesi.projetos.auth.util.SecurityParameters;
-import com.sesi.projetos.model.*;
+import com.sesi.projetos.model.auth.CadastroRequest;
+import com.sesi.projetos.model.auth.LoginRequest;
+import com.sesi.projetos.model.usuario.classes.AtualizaRoleRequest;
+import com.sesi.projetos.model.usuario.classes.GetUsuariosResponse;
+import com.sesi.projetos.model.usuario.interfaces.I_UsuarioSafe;
+import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import com.sesi.projetos.repository.R_Usuario;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -105,12 +110,8 @@ public class S_Usuario {
         }
     }
 
-    public List<GetUsuariosResponse> getUsuarios(){
+    public List<GetUsuariosResponse> getUsuarios() {
         List<I_UsuarioSafe> usuarioSafes = r_usuario.findAllUsersSafeInfo();
-        List<GetUsuariosResponse> response = new ArrayList<>();
-        for (I_UsuarioSafe usuarioSafe : usuarioSafes){
-            response.add(new GetUsuariosResponse(usuarioSafe.getId(), usuarioSafe.getNome(), usuarioSafe.getRole()));
-        }
-        return response;
+        return GetUsuariosResponse.getIUsuarioConverter(usuarioSafes);
     }
 }

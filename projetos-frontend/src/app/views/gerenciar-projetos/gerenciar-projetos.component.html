@@ -1,0 +1,40 @@
+<div class="container">
+          <legend>Gerenciamento de Projetos</legend>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">Projeto</label>
+            <select type="text" id="disabledTextInput" class="form-select" [(ngModel)]="projetoSelecionado">
+                <option value="">Selecione um projeto</option>
+                <option *ngIf="semProjetos == false; then projetosTemplate else semProjetosTemp">Nenhum projeto disponivel</option>
+            </select>
+          </div>
+          <label for="btnAddProfe" class="form-label">Adicionar professor responsável </label>
+          <div class="mb-3">
+            <button (click)="adicionarInputProfessor()" id="btnAddProfe" class="mx-2 btn btn-success"><fa-icon [icon]="plusIcon"></fa-icon></button>
+            <div class="input-group mt-3" *ngFor="let input of inputsProfessor; let i = index; ngForTrackBy: trackByIndex;">
+                <input type="text" class="form-control" [(ngModel)]="input.value" placeholder="Escreva o cpf do professor que sera responsável" />
+            </div>
+          </div>
+          <label for="btnAddProfe" class="form-label">Adicionar aluno participante </label>
+          <div class="mb-3">
+            <button (click)="adicionarInputAluno()" id="btnAddProfe" class="mx-2 btn btn-success"><fa-icon [icon]="plusIcon"></fa-icon></button>
+            <div class="input-group mt-3" *ngFor="let input of inputsAluno; let i = index; ngForTrackBy: trackByIndex;">
+                <input type="text" class="form-control" [(ngModel)]="input.value" placeholder="Escreva o cpf do aluno que ira participar" />
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" (click)="editarProjeto()">Salvar alterações</button>
+
+      
+    <ng-template #projetosTemplate>
+        <option *ngFor="let projeto of projetos"
+           [value]="projeto.codProjeto"
+        >
+        {{projeto.nome}} ({{projeto.codProjeto}})
+        </option>
+    </ng-template>
+
+    <ng-template #semProjetosTemp>
+        <option>Nenhum projeto disponível</option>
+    </ng-template>
+</div>
+
+

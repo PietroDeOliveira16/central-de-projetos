@@ -14,10 +14,11 @@ public class SecurityParameters {
     );
     public static final List<String> ADMIN_POST_ENDPOINTS = Arrays.asList(
             "/projeto/admin/criarProjeto",
+            "/projeto/admin/editarProjeto",
             "/auth/admin/atualizarRole"
     );
     public static final List<String> ADMIN_GET_ENDPOINTS = Arrays.asList(
-
+            "/projeto/admin/getProjetosSafe"
     );
     public static final List<String> PROFESSOR_POST_ENDPOINTS = Arrays.asList(
 

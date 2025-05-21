@@ -1,7 +1,9 @@
 package com.sesi.projetos.controller;
 
-import com.sesi.projetos.model.CriarProjetoRequest;
-import com.sesi.projetos.model.ProjetoApi;
+import com.sesi.projetos.model.projeto.classes.CriarProjetoRequest;
+import com.sesi.projetos.model.projeto.classes.EditarProjetoRequest;
+import com.sesi.projetos.model.projeto.classes.GetProjetosSafeResponse;
+import com.sesi.projetos.model.projeto.classes.ProjetoApi;
 import com.sesi.projetos.service.S_Projeto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +26,23 @@ public class C_Projeto {
                 criarProjetoRequest.getProjetoApi().getDescricaoProjeto(), criarProjetoRequest.getProjetoApi().getCodigoProjeto(), criarProjetoRequest.getDados().toString());
     }
 
+    @GetMapping("/admin/getProjetosSafe")
+    public List<GetProjetosSafeResponse> getProjetsSafe(){
+        return s_projeto.getProjetosSafe();
+    }
+
     @GetMapping("/getProjetos")
-    public List<ProjetoApi> postGetProjetos(){
+    public List<ProjetoApi> getProjetos(){
         return s_projeto.getProjetosApi();
     }
 
     @PostMapping("/getDiasProjeto")
     public ResponseEntity<String> postDiasProjetos(@RequestBody String codigoProjeto){
         return s_projeto.getDiasProjeto(codigoProjeto);
+    }
+
+    @PostMapping("/admin/editarProjeto")
+    public ResponseEntity<String> postEditarProjeto(@RequestBody EditarProjetoRequest editarProjetoRequest){
+        return s_projeto.editarProjeto(editarProjetoRequest);
     }
 }

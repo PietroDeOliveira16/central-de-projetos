@@ -9,6 +9,7 @@ import { jwtGuard } from './auth/jwt_guard/jwt.guard';
 import { loginGuard } from './auth/login_guard/login.guard';
 import { adminGuard } from './auth/admin_guard/admin.guard';
 import { GerenciarUsersComponent } from './views/gerenciar-users/gerenciar-users.component';
+import { GerenciarProjetosComponent } from './views/gerenciar-projetos/gerenciar-projetos.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +22,10 @@ export const routes: Routes = [
         component:LandPageComponent
     },
     {
+        path:'saiba-mais',
+        component:SaibaMaisComponent
+    },
+    {
         path:'login',
         component:LoginComponent,
         canActivate:[loginGuard]
@@ -30,22 +35,23 @@ export const routes: Routes = [
         component:CadastroComponent
     },
     {
-        path:'criar-projeto',
-        component:CriarProjetoComponent,
-        canActivate:[jwtGuard, adminGuard]
-    },
-    {
-        path:'saiba-mais',
-        component:SaibaMaisComponent
-    },
-    {
         path:'home',
         component:HomeComponent,
         canActivate:[jwtGuard]
     },
     {
+        path:'criar-projeto',
+        component:CriarProjetoComponent,
+        canActivate:[jwtGuard, adminGuard]
+    },
+    {
         path:'gerenciar-users',
         component:GerenciarUsersComponent,
+        canActivate:[jwtGuard, adminGuard]
+    },
+    {
+        path:'gerenciar-projetos',
+        component:GerenciarProjetosComponent,
         canActivate:[jwtGuard, adminGuard]
     }
 ];

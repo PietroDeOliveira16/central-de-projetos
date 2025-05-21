@@ -1,12 +1,11 @@
 package com.sesi.projetos.auth.spring_security.model;
 
-import com.sesi.projetos.model.M_Usuario;
+import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {

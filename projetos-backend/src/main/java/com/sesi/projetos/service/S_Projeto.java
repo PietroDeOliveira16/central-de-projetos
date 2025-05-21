@@ -1,11 +1,15 @@
 package com.sesi.projetos.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sesi.projetos.model.M_DiasEcontrosProjeto;
-import com.sesi.projetos.model.M_Projeto;
-import com.sesi.projetos.model.ProjetoApi;
+import com.sesi.projetos.auth.spring_security.model.UserRole;
+import com.sesi.projetos.model.projeto.classes.*;
+import com.sesi.projetos.model.projeto.interfaces.I_ProjetosSafe;
+import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import com.sesi.projetos.repository.R_DiasEncontrosProjeto;
+import com.sesi.projetos.repository.R_MembroProjeto;
 import com.sesi.projetos.repository.R_Projeto;
+import com.sesi.projetos.repository.R_Usuario;
+import com.sesi.projetos.util.ValidadorDeCpf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +25,11 @@ public class S_Projeto {
     @Autowired
     private R_Projeto r_projeto;
     @Autowired
+    private R_Usuario r_usuario;
+    @Autowired
     private R_DiasEncontrosProjeto r_diasEncontrosProjeto;
+    @Autowired
+    private R_MembroProjeto r_membroProjeto;
 
     public ResponseEntity<String> criarProjeto(String nome, String descricao, String codigo, String dados) {
         boolean podeCriar = !nome.isEmpty() && !descricao.isEmpty() && !codigo.isEmpty();
@@ -31,7 +39,7 @@ public class S_Projeto {
                 return ResponseEntity.ok("Descrição ultrapassa o limite de caracteres!");
             }
             codigo = codigo.replaceAll("\\s+", "").toUpperCase();
-            if(r_projeto.findProjetoByCodigo(codigo) != null){
+            if (r_projeto.findProjetoByCodigo(codigo) != null) {
                 return ResponseEntity.ok("Código de projeto já foi escolhido, por favor escolha outro códgio.");
             } else if (codigo.length() > 5) {
                 return ResponseEntity.ok("Código do projeto ultrapassa o limite de caracteres!");
@@ -126,12 +134,71 @@ public class S_Projeto {
         List<M_DiasEcontrosProjeto> diasEncontro = r_diasEncontrosProjeto.findDiasByProjetoId(
                 r_projeto.findProjetoByCodigo(codigoProjeto).getId());
         M_DiasEcontrosProjeto horarioDosDias = diasEncontro.get(0);
-        for (M_DiasEcontrosProjeto dias : diasEncontro){
+        for (M_DiasEcontrosProjeto dias : diasEncontro) {
             response.append(dias.getDiaDaSemana()).append(";");
         }
         response.append("/");
         response.append(horarioDosDias.getDataEncontroInicio()).append(";");
         response.append(horarioDosDias.getDataEncontroTermino()).append(";");
         return ResponseEntity.ok(response.toString());
+    }
+
+    public List<GetProjetosSafeResponse> getProjetosSafe() {
+        List<I_ProjetosSafe> projetosSafesInterface = r_projeto.findProjetosInterface();
+        List<GetProjetosSafeResponse> projetosResponse = new ArrayList<>();
+        for (I_ProjetosSafe projeto : projetosSafesInterface) {
+            projetosResponse.add(new GetProjetosSafeResponse(projeto.getNome(), projeto.getcodProjeto()));
+        }
+
+        return projetosResponse;
+    }
+
+    public ResponseEntity<String> editarProjeto(EditarProjetoRequest editarProjetoRequest) {
+        if (!editarProjetoRequest.getCodigoProjeto().isBlank()) {
+            M_Projeto projeto = r_projeto.findProjetoByCodigo(editarProjetoRequest.getCodigoProjeto());
+            List<M_MembroProjeto> membrosDoProjeto = new ArrayList<>();
+            for (String cpf : editarProjetoRequest.getCpfsMembrosDoProjeto()) {
+                if (cpf.isBlank()) {
+                    continue;
+                }
+                if (!ValidadorDeCpf.validarCpf(cpf)) {
+                    return ResponseEntity.ok("CPF " + cpf + " não é um CPF válido / existente. Verifique se ele está escrito corretamente ou possui o tamanho correto de um CPF (11 números)");
+                }
+                M_MembroProjeto membroProjeto = new M_MembroProjeto();
+                M_Usuario membro = new M_Usuario();
+                try {
+                    membro = r_usuario.findByCpf(cpf);
+                } catch (Exception e) {
+                    return ResponseEntity.ok("CPF " + cpf + " não está registrado no sistema");
+                }
+                if (membro != null) {
+                    if (membro.getRole() == UserRole.PROFESSOR || membro.getRole() == UserRole.ALUNO) {
+                        if (r_membroProjeto.findUsuarioInProjeto(membro.getId(), projeto.getId()) != null) {
+                            if (membro.getRole() == UserRole.PROFESSOR) {
+                                return ResponseEntity.ok("Professor do CPF " + membro.getCpf() + " já é responsável por este projeto");
+                            } else if (membro.getRole() == UserRole.ALUNO) {
+                                return ResponseEntity.ok("Aluno do CPF " + membro.getCpf() + " já participa deste projeto");
+                            }
+                        }
+                        membroProjeto.setUsuario(membro);
+                        membroProjeto.setProjeto(projeto);
+                        membrosDoProjeto.add(membroProjeto);
+                    } else {
+                        return ResponseEntity.ok("O usuário do CPF " + membro.getCpf() + " não possui cadastro de professor ou de aluno");
+                    }
+                } else {
+                    return ResponseEntity.ok("Usuário do CPF " + cpf + " não foi encontrado no sistema");
+                }
+            }
+            if (!membrosDoProjeto.isEmpty()) {
+                r_membroProjeto.saveAll(membrosDoProjeto);
+                return ResponseEntity.ok("Edição do projeto " + projeto.getNome() + " concluída com sucesso!");
+            } else {
+                return ResponseEntity.ok("Nenhuma edição foi feita ao projeto");
+            }
+            //return ResponseEntity.ok("Edição do projeto " + projeto.getNome() + " concluída com sucesso!");
+        } else {
+            return ResponseEntity.ok("Selecione o projeto para edição");
+        }
     }
 }
