@@ -1,4 +1,9 @@
-package com.sesi.projetos.model;
+package com.sesi.projetos.model.usuario.classes;
+
+import com.sesi.projetos.model.usuario.interfaces.I_UsuarioSafe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetUsuariosResponse {
     private Long id;
@@ -42,5 +47,13 @@ public class GetUsuariosResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public static List<GetUsuariosResponse> getIUsuarioConverter(List<I_UsuarioSafe> usuarioSafes){
+        List<GetUsuariosResponse> response = new ArrayList<>();
+        for(I_UsuarioSafe usuarioSafe : usuarioSafes){
+            response.add(new GetUsuariosResponse(usuarioSafe.getId(), usuarioSafe.getNome(), usuarioSafe.getRole()));
+        }
+        return response;
     }
 }

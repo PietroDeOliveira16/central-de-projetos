@@ -1,9 +1,10 @@
 package com.sesi.projetos.controller;
 
-import com.sesi.projetos.auth.spring_security.model.UserRole;
-import com.sesi.projetos.model.*;
+import com.sesi.projetos.model.auth.CadastroRequest;
+import com.sesi.projetos.model.auth.LoginRequest;
+import com.sesi.projetos.model.usuario.classes.AtualizaRoleRequest;
+import com.sesi.projetos.model.usuario.classes.GetUsuariosResponse;
 import com.sesi.projetos.service.S_Usuario;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

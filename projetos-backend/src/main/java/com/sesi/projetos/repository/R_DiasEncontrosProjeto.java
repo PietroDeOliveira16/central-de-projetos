@@ -1,6 +1,6 @@
 package com.sesi.projetos.repository;
 
-import com.sesi.projetos.model.M_DiasEcontrosProjeto;
+import com.sesi.projetos.model.projeto.classes.M_DiasEcontrosProjeto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

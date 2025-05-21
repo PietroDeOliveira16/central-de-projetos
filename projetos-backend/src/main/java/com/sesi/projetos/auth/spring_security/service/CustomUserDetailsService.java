@@ -1,7 +1,7 @@
 package com.sesi.projetos.auth.spring_security.service;
 
 import com.sesi.projetos.auth.spring_security.model.UserPrincipal;
-import com.sesi.projetos.model.M_Usuario;
+import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import com.sesi.projetos.repository.R_Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
