@@ -30,4 +30,8 @@ export class ProjetoService {
     console.log(request);
     return this.http.post(`${environment.projetoApiUrl}/admin/editarProjeto`, request, {withCredentials: true, responseType: 'text'});
   }
+
+  getProjetosParticipando(){
+    return this.http.get<any>(`${environment.projetoApiUrl}/getProjetosParticipando`, {withCredentials: true});
+  }
 }
