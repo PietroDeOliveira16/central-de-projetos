@@ -1,10 +1,8 @@
 package com.sesi.projetos.controller;
 
-import com.sesi.projetos.model.projeto.classes.CriarProjetoRequest;
-import com.sesi.projetos.model.projeto.classes.EditarProjetoRequest;
-import com.sesi.projetos.model.projeto.classes.GetProjetosSafeResponse;
-import com.sesi.projetos.model.projeto.classes.ProjetoApi;
+import com.sesi.projetos.model.projeto.classes.*;
 import com.sesi.projetos.service.S_Projeto;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +42,10 @@ public class C_Projeto {
     @PostMapping("/admin/editarProjeto")
     public ResponseEntity<String> postEditarProjeto(@RequestBody EditarProjetoRequest editarProjetoRequest){
         return s_projeto.editarProjeto(editarProjetoRequest);
+    }
+
+    @GetMapping("/getProjetosParticipando")
+    public List<ProjetosUserParticipaResponse> getProjetosParicipando(HttpServletRequest request){
+        return s_projeto.getProjetosUsuarioParticipa(request);
     }
 }

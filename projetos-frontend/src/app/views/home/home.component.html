@@ -1,1 +1,25 @@
-<p>home works!</p>
+<div class="container text-center mt-3">
+    <div *ngIf="projetosVazio == false; then projetoUserParticipa else naoParticipaDeProjetos"></div>
+</div>
+
+<ng-template #projetoUserParticipa>
+    <h1 class="text-start">Seus Projetos</h1>
+    <hr>
+    <div id="divProjetos" class="d-flex flex-row">
+        <div id="divFor" *ngFor="let projeto of projetos"> <!--Esta div meio que não é carregada e não recebe classes-->
+            <div id="divCardProjeto" class="card-projeto me-3">
+                <h5 class="mt-2">{{projeto.nome}}</h5>
+                <p>{{projeto.codProjeto}}</p>
+                <p>Entrou em: {{projeto.dataInscricao | date:'dd/MM/yyyy HH:mm':'America/Sao_Paulo':'pt-BR'}}</p>
+                <button class="btn btn-primary">Ver</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #naoParticipaDeProjetos>
+    <div>
+        <h1>Você não participa de nenhum projeto no momento.</h1>
+        <p>Contate um administrador ou professor responsável da sua unidade para ser registrado em um projeto.</p>
+    </div>
+</ng-template>

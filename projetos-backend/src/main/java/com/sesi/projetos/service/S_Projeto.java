@@ -1,15 +1,20 @@
 package com.sesi.projetos.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sesi.projetos.auth.jwt.service.S_Jwt;
 import com.sesi.projetos.auth.spring_security.model.UserRole;
 import com.sesi.projetos.model.projeto.classes.*;
+import com.sesi.projetos.model.projeto.interfaces.I_ProjetosParticipando;
 import com.sesi.projetos.model.projeto.interfaces.I_ProjetosSafe;
 import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import com.sesi.projetos.repository.R_DiasEncontrosProjeto;
 import com.sesi.projetos.repository.R_MembroProjeto;
 import com.sesi.projetos.repository.R_Projeto;
 import com.sesi.projetos.repository.R_Usuario;
+import com.sesi.projetos.util.CookieHandler;
 import com.sesi.projetos.util.ValidadorDeCpf;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +35,8 @@ public class S_Projeto {
     private R_DiasEncontrosProjeto r_diasEncontrosProjeto;
     @Autowired
     private R_MembroProjeto r_membroProjeto;
+    @Autowired
+    private S_Jwt s_jwt;
 
     public ResponseEntity<String> criarProjeto(String nome, String descricao, String codigo, String dados) {
         boolean podeCriar = !nome.isEmpty() && !descricao.isEmpty() && !codigo.isEmpty();
@@ -161,9 +168,10 @@ public class S_Projeto {
                 if (cpf.isBlank()) {
                     continue;
                 }
-                if (!ValidadorDeCpf.validarCpf(cpf)) {
+                // VALIDADOR DE CPF TEMPORARIAMENTE COMENTADO PARA TESTES
+                /*if (!ValidadorDeCpf.validarCpf(cpf)) {
                     return ResponseEntity.ok("CPF " + cpf + " não é um CPF válido / existente. Verifique se ele está escrito corretamente ou possui o tamanho correto de um CPF (11 números)");
-                }
+                }*/
                 M_MembroProjeto membroProjeto = new M_MembroProjeto();
                 M_Usuario membro = new M_Usuario();
                 try {
@@ -200,5 +208,16 @@ public class S_Projeto {
         } else {
             return ResponseEntity.ok("Selecione o projeto para edição");
         }
+    }
+
+    public List<ProjetosUserParticipaResponse> getProjetosUsuarioParticipa(HttpServletRequest request) {
+        String token = CookieHandler.retreiveTokenFromCookies(request.getCookies());
+        M_Usuario usuario = r_usuario.findByUsername(s_jwt.extractUsernameFromToken(token));
+        List<I_ProjetosParticipando> projetosUserParticipando = r_projeto.findProjetosUserParticipaById(usuario.getId());
+        List<ProjetosUserParticipaResponse> response = new ArrayList<>();
+        for(I_ProjetosParticipando projeto : projetosUserParticipando){
+            response.add(new ProjetosUserParticipaResponse(projeto));
+        }
+        return response;
     }
 }
