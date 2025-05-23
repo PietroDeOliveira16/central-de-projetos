@@ -11,7 +11,7 @@
                 <h5 class="mt-2">{{projeto.nome}}</h5>
                 <p>{{projeto.codProjeto}}</p>
                 <p>Entrou em: {{projeto.dataInscricao | date:'dd/MM/yyyy HH:mm':'America/Sao_Paulo':'pt-BR'}}</p>
-                <button class="btn btn-primary">Ver</button>
+                <button class="btn btn-primary" (click)="verProjeto(projeto.codProjeto)">Ver</button>
             </div>
         </div>
     </div>

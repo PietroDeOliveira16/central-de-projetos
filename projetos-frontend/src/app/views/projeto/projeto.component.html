@@ -1,0 +1,20 @@
+<div class="d-flex flex-row mt-2">
+    <ul class="nav flex-column nav-projeto">
+        <li class="nav-item">
+          <button class="nav-link" (click)="routeTo('diario-de-bordo')">Diário de Bordo</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="routeTo('arquivos')">Arquivos</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="routeTo('recados')">Recados</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="routeTo('caixa')">Caixa</button>
+        </li>
+    </ul>
+    
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

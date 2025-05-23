@@ -1,7 +1,6 @@
 package com.sesi.projetos.repository;
 
 import com.sesi.projetos.auth.spring_security.model.UserRole;
-import com.sesi.projetos.model.usuario.classes.GetUsuariosResponse;
 import com.sesi.projetos.model.usuario.interfaces.I_UsuarioSafe;
 import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import jakarta.transaction.Transactional;

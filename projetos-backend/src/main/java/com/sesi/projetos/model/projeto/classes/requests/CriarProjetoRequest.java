@@ -1,4 +1,6 @@
-package com.sesi.projetos.model.projeto.classes;
+package com.sesi.projetos.model.projeto.classes.requests;
+
+import com.sesi.projetos.model.projeto.classes.responses.ProjetoApi;
 
 public class CriarProjetoRequest {
     private ProjetoApi projetoApi;

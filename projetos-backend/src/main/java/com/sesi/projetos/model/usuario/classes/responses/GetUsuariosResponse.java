@@ -1,4 +1,4 @@
-package com.sesi.projetos.model.usuario.classes;
+package com.sesi.projetos.model.usuario.classes.responses;
 
 import com.sesi.projetos.model.usuario.interfaces.I_UsuarioSafe;
 

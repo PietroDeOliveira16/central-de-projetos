@@ -5,8 +5,8 @@ import com.sesi.projetos.auth.spring_security.model.UserRole;
 import com.sesi.projetos.auth.util.SecurityParameters;
 import com.sesi.projetos.model.auth.CadastroRequest;
 import com.sesi.projetos.model.auth.LoginRequest;
-import com.sesi.projetos.model.usuario.classes.AtualizaRoleRequest;
-import com.sesi.projetos.model.usuario.classes.GetUsuariosResponse;
+import com.sesi.projetos.model.usuario.classes.requests.AtualizaRoleRequest;
+import com.sesi.projetos.model.usuario.classes.responses.GetUsuariosResponse;
 import com.sesi.projetos.model.usuario.interfaces.I_UsuarioSafe;
 import com.sesi.projetos.model.usuario.classes.M_Usuario;
 import com.sesi.projetos.repository.R_Usuario;
@@ -20,7 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.sesi.projetos.model.projeto.classes;
+package com.sesi.projetos.model.projeto.classes.requests;
 
 import java.util.List;
 

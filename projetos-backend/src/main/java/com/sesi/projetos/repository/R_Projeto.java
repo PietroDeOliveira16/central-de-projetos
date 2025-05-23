@@ -27,5 +27,9 @@ public interface R_Projeto extends JpaRepository<M_Projeto, Long> {
 
     @Query(value = "select p.nome, p.cod_projeto, m.data_inscricao from projeto p " +
             "join membro_projeto m on m.id_usuario = :id_usuario and p.id = m.id_projeto;", nativeQuery = true)
-    List<I_ProjetosParticipando> findProjetosUserParticipaById(@Param("id_usuario") Long id_usuario);
+    List<I_ProjetosParticipando> findProjetosUserParticipaById(@Param("id_usuario") Long idUsuario);
+
+    @Query(value = "select p.* from projeto p " +
+            "join membro_projeto m on m.id_usuario = :id_usuario and p.id = :id_projeto limit 1;", nativeQuery = true)
+    M_Projeto findIfUserIsFromProjeto(@Param("id_projeto") Long idProjeto, @Param("id_usuario") Long idUsuario);
 }

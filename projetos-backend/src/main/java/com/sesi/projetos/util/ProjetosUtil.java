@@ -1,6 +1,6 @@
 package com.sesi.projetos.util;
 
-public class ValidadorDeCpf {
+public class ProjetosUtil {
     private static int sequenciaMultiplicativa = 0;
 
     /**
@@ -55,7 +55,7 @@ public class ValidadorDeCpf {
         }
 
         if (ultimosDigitos[0] == restoDivisaoDigitosAntes && ultimosDigitos[1] == restoDivisaoUltimosDigitos){
-             return true;
+            return true;
         }
 
         return false;

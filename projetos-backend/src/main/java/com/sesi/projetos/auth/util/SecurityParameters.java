@@ -27,10 +27,11 @@ public class SecurityParameters {
 
     );
     public static final List<String> ALUNO_POST_ENDPOINTS = Arrays.asList(
-
+        "/projeto/acharProjetoCodigo"
     );
     public static final List<String> ALUNO_GET_ENDPOINTS = Arrays.asList(
-        "/projeto/getProjetosParticipando"
+        "/projeto/getProjetosParticipando",
+        "/tarefa/getTarefas"
     );
     public static final long TOKEN_COOKIE_LONG_MAX_AGE_SECS = (24L * 60L * 60L);
     public static final int TOKEN_COOKIE_INT_MAX_AGE_SECS = (24 * 60 * 60);

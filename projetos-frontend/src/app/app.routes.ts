@@ -10,6 +10,11 @@ import { loginGuard } from './auth/login_guard/login.guard';
 import { adminGuard } from './auth/admin_guard/admin.guard';
 import { GerenciarUsersComponent } from './views/gerenciar-users/gerenciar-users.component';
 import { GerenciarProjetosComponent } from './views/gerenciar-projetos/gerenciar-projetos.component';
+import { ProjetoComponent } from './views/projeto/projeto.component';
+import { DiarioDeBordoComponent } from './components/diario-de-bordo/diario-de-bordo.component';
+import { ArquivosComponent } from './components/arquivos/arquivos.component';
+import { RecadosComponent } from './components/recados/recados.component';
+import { CaixaComponent } from './components/caixa/caixa.component';
 
 export const routes: Routes = [
     {
@@ -38,6 +43,33 @@ export const routes: Routes = [
         path:'home',
         component:HomeComponent,
         canActivate:[jwtGuard]
+    },
+    {
+        path:'projeto',
+        component:ProjetoComponent,
+        canActivate:[jwtGuard],
+        children: [
+            {
+                path:'diario-de-bordo',
+                component:DiarioDeBordoComponent,
+                canActivate:[jwtGuard]
+            },
+            {
+                path:'arquivos',
+                component:ArquivosComponent,
+                canActivate:[jwtGuard]
+            },
+            {
+                path:'recados',
+                component:RecadosComponent,
+                canActivate:[jwtGuard]
+            },
+            {
+                path:'caixa',
+                component:CaixaComponent,
+                canActivate:[jwtGuard]
+            }
+        ]
     },
     {
         path:'criar-projeto',

@@ -1,4 +1,4 @@
-package com.sesi.projetos.model.projeto.classes;
+package com.sesi.projetos.model.projeto.classes.responses;
 
 import com.sesi.projetos.model.projeto.interfaces.I_ProjetosParticipando;
 

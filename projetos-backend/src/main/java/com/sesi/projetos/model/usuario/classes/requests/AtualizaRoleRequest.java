@@ -1,4 +1,4 @@
-package com.sesi.projetos.model.usuario.classes;
+package com.sesi.projetos.model.usuario.classes.requests;
 
 import com.sesi.projetos.auth.spring_security.model.UserRole;
 

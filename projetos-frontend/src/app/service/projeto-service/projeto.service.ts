@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Projeto } from '../../model/projeto.type';
 import { environment } from '../../../environments/environment';
 import { editarProjeto } from '../../model/editarProjeto.type';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjetoService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getProjetos(){
     return this.http.get<Projeto[]>(`${environment.projetoApiUrl}/getProjetos`);
@@ -33,5 +34,13 @@ export class ProjetoService {
 
   getProjetosParticipando(){
     return this.http.get<any>(`${environment.projetoApiUrl}/getProjetosParticipando`, {withCredentials: true});
+  }
+
+  verProjeto(codProjeto: string) {
+    this.router.navigate(["/projeto"], {queryParams: {cod_projeto: codProjeto}})
+  }
+
+  acharProjeto(codProjeto: string) {
+    return this.http.post<any>(`${environment.projetoApiUrl}/acharProjetoCodigo`, codProjeto, {withCredentials: true});
   }
 }

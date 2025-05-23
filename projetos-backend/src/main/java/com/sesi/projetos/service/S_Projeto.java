@@ -3,7 +3,12 @@ package com.sesi.projetos.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sesi.projetos.auth.jwt.service.S_Jwt;
 import com.sesi.projetos.auth.spring_security.model.UserRole;
+import com.sesi.projetos.auth.util.AuthUtil;
 import com.sesi.projetos.model.projeto.classes.*;
+import com.sesi.projetos.model.projeto.classes.requests.EditarProjetoRequest;
+import com.sesi.projetos.model.projeto.classes.responses.GetProjetosSafeResponse;
+import com.sesi.projetos.model.projeto.classes.responses.ProjetoApi;
+import com.sesi.projetos.model.projeto.classes.responses.ProjetosUserParticipaResponse;
 import com.sesi.projetos.model.projeto.interfaces.I_ProjetosParticipando;
 import com.sesi.projetos.model.projeto.interfaces.I_ProjetosSafe;
 import com.sesi.projetos.model.usuario.classes.M_Usuario;
@@ -11,9 +16,6 @@ import com.sesi.projetos.repository.R_DiasEncontrosProjeto;
 import com.sesi.projetos.repository.R_MembroProjeto;
 import com.sesi.projetos.repository.R_Projeto;
 import com.sesi.projetos.repository.R_Usuario;
-import com.sesi.projetos.util.CookieHandler;
-import com.sesi.projetos.util.ValidadorDeCpf;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -169,7 +171,7 @@ public class S_Projeto {
                     continue;
                 }
                 // VALIDADOR DE CPF TEMPORARIAMENTE COMENTADO PARA TESTES
-                /*if (!ValidadorDeCpf.validarCpf(cpf)) {
+                /*if (!ProjetosUtil.validarCpf(cpf)) {
                     return ResponseEntity.ok("CPF " + cpf + " não é um CPF válido / existente. Verifique se ele está escrito corretamente ou possui o tamanho correto de um CPF (11 números)");
                 }*/
                 M_MembroProjeto membroProjeto = new M_MembroProjeto();
@@ -211,13 +213,19 @@ public class S_Projeto {
     }
 
     public List<ProjetosUserParticipaResponse> getProjetosUsuarioParticipa(HttpServletRequest request) {
-        String token = CookieHandler.retreiveTokenFromCookies(request.getCookies());
-        M_Usuario usuario = r_usuario.findByUsername(s_jwt.extractUsernameFromToken(token));
+        M_Usuario usuario = AuthUtil.findUsuarioWithRequestCookies(request, s_jwt, r_usuario);
         List<I_ProjetosParticipando> projetosUserParticipando = r_projeto.findProjetosUserParticipaById(usuario.getId());
         List<ProjetosUserParticipaResponse> response = new ArrayList<>();
         for(I_ProjetosParticipando projeto : projetosUserParticipando){
             response.add(new ProjetosUserParticipaResponse(projeto));
         }
         return response;
+    }
+
+    public M_Projeto acharProjetoPorCodigo(String codigo, HttpServletRequest request) {
+        M_Usuario usuario = AuthUtil.findUsuarioWithRequestCookies(request, s_jwt, r_usuario);
+        return r_projeto.findIfUserIsFromProjeto(
+                r_projeto.findProjetoByCodigo(codigo).getId(),
+                usuario.getId());
     }
 }

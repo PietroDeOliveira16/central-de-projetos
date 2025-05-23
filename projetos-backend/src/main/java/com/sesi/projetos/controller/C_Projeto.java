@@ -1,6 +1,11 @@
 package com.sesi.projetos.controller;
 
 import com.sesi.projetos.model.projeto.classes.*;
+import com.sesi.projetos.model.projeto.classes.requests.CriarProjetoRequest;
+import com.sesi.projetos.model.projeto.classes.requests.EditarProjetoRequest;
+import com.sesi.projetos.model.projeto.classes.responses.GetProjetosSafeResponse;
+import com.sesi.projetos.model.projeto.classes.responses.ProjetoApi;
+import com.sesi.projetos.model.projeto.classes.responses.ProjetosUserParticipaResponse;
 import com.sesi.projetos.service.S_Projeto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +52,10 @@ public class C_Projeto {
     @GetMapping("/getProjetosParticipando")
     public List<ProjetosUserParticipaResponse> getProjetosParicipando(HttpServletRequest request){
         return s_projeto.getProjetosUsuarioParticipa(request);
+    }
+
+    @PostMapping("/acharProjetoCodigo")
+    public M_Projeto postAcharProjetoCodigo(@RequestBody String codigo, HttpServletRequest request){
+        return s_projeto.acharProjetoPorCodigo(codigo, request);
     }
 }

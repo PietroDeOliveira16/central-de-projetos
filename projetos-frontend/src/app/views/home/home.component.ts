@@ -24,4 +24,9 @@ export class HomeComponent implements OnInit{
       }
     })
   }
+
+  verProjeto(codProjeto: string){
+    console.log(codProjeto);
+    this.projetoService.verProjeto(codProjeto);
+  }
 }
